@@ -19,10 +19,10 @@ SOURCES += main.cpp\
     analyzer.cpp
 
 HEADERS  += widget.h \
-    ieee80211.h \
     ieee80211_radiotap.h \
     devselectdlg.h \
-    analyzer.h
+    analyzer.h \
+    ieee80211.h
 
 FORMS    += widget.ui \
     devselectdlg.ui

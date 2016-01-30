@@ -61,6 +61,7 @@
  * The radio capture header precedes the 802.11 header.
  * All data in the header is little endian on all platforms.
  */
+#pragma pack(push, 1)
 struct ieee80211_radiotap_header {
     __u8 it_version;		/* Version 0. Only increases
                  * for drastic changes,
@@ -80,7 +81,8 @@ struct ieee80211_radiotap_header {
                  * Additional extensions are made
                  * by setting bit 31.
                  */
-} __packed;
+};
+#pragma pack(pop)
 
 /* Name                                 Data type    Units
  * ----                                 ---------    -----

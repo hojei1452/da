@@ -38,7 +38,7 @@
 /*
  * 802.11 protocol definitions.
  */
-
+#pragma pack(push, 1)
 #define	IEEE80211_ADDR_LEN	6		/* size of 802.11 address */
 /* is 802.11 address multicast/broadcast? */
 #define	IEEE80211_IS_MULTICAST(_a)	(*(_a) & 0x01)
@@ -50,7 +50,7 @@ struct ieee80211_plcp_hdr {
     u_int8_t	i_service;
     u_int16_t	i_length;
     u_int16_t	i_crc;
-} __packed;
+} ;
 
 #define IEEE80211_PLCP_SFD      0xF3A0
 #define IEEE80211_PLCP_SERVICE  0x00
@@ -67,7 +67,7 @@ struct ieee80211_frame {
     u_int8_t	i_seq[2];
     /* possibly followed by addr4[IEEE80211_ADDR_LEN]; */
     /* see below */
-} __packed;
+} ;
 
 struct ieee80211_qosframe {
     u_int8_t	i_fc[2];
@@ -79,7 +79,7 @@ struct ieee80211_qosframe {
     u_int8_t	i_qos[2];
     /* possibly followed by addr4[IEEE80211_ADDR_LEN]; */
     /* see below */
-} __packed;
+} ;
 
 struct ieee80211_qoscntl {
     u_int8_t	i_qos[2];
@@ -93,7 +93,7 @@ struct ieee80211_frame_addr4 {
     u_int8_t	i_addr3[IEEE80211_ADDR_LEN];
     u_int8_t	i_seq[2];
     u_int8_t	i_addr4[IEEE80211_ADDR_LEN];
-} __packed;
+} ;
 
 
 struct ieee80211_qosframe_addr4 {
@@ -105,7 +105,7 @@ struct ieee80211_qosframe_addr4 {
     u_int8_t	i_seq[2];
     u_int8_t	i_addr4[IEEE80211_ADDR_LEN];
     u_int8_t	i_qos[2];
-} __packed;
+} ;
 
 #define	IEEE80211_FC0_VERSION_MASK		0x03
 #define	IEEE80211_FC0_VERSION_SHIFT		0
@@ -213,7 +213,7 @@ struct ieee80211_wme_info {
     u_int8_t	wme_subtype;	/* OUI subtype */
     u_int8_t	wme_version;	/* spec revision */
     u_int8_t	wme_info;	/* QoS info */
-} __packed;
+} ;
 
 /*
  * WME/802.11e Tspec Element
@@ -241,7 +241,7 @@ struct ieee80211_wme_tspec {
     u_int8_t	ts_delay[4];
     u_int8_t	ts_surplus[2];
     u_int8_t	ts_medium_time[2];
-} __packed;
+} ;
 
 /*
  * WME AC parameter field
@@ -250,7 +250,7 @@ struct ieee80211_wme_acparams {
     u_int8_t	acp_aci_aifsn;
     u_int8_t	acp_logcwminmax;
     u_int16_t	acp_txop;
-} __packed;
+} ;
 
 /* WME stream classes */
 enum ieee80211_wme_ac {
@@ -298,7 +298,7 @@ struct ieee80211_wme_param {
 #define	WME_QOSINFO_COUNT	0x0f	/* Mask for param count field */
     u_int8_t	param_reserved;
     struct ieee80211_wme_acparams	params_acParams[WME_NUM_AC];
-} __packed;
+} ;
 
 /*
  * Management Notification Frame
@@ -308,7 +308,7 @@ struct ieee80211_mnf {
     u_int8_t	mnf_action;
     u_int8_t	mnf_dialog;
     u_int8_t	mnf_status;
-} __packed;
+} ;
 #define	MNF_SETUP_REQ	0
 #define	MNF_SETUP_RESP	1
 #define	MNF_TEARDOWN	2
@@ -322,7 +322,7 @@ struct ieee80211_frame_min {
     u_int8_t	i_addr1[IEEE80211_ADDR_LEN];
     u_int8_t	i_addr2[IEEE80211_ADDR_LEN];
     /* FCS */
-} __packed;
+} ;
 
 struct ieee80211_frame_rts {
     u_int8_t	i_fc[2];
@@ -330,21 +330,21 @@ struct ieee80211_frame_rts {
     u_int8_t	i_ra[IEEE80211_ADDR_LEN];
     u_int8_t	i_ta[IEEE80211_ADDR_LEN];
     /* FCS */
-} __packed;
+} ;
 
 struct ieee80211_frame_cts {
     u_int8_t	i_fc[2];
     u_int8_t	i_dur[2];
     u_int8_t	i_ra[IEEE80211_ADDR_LEN];
     /* FCS */
-} __packed;
+} ;
 
 struct ieee80211_frame_ack {
     u_int8_t	i_fc[2];
     u_int8_t	i_dur[2];
     u_int8_t	i_ra[IEEE80211_ADDR_LEN];
     /* FCS */
-} __packed;
+} ;
 
 struct ieee80211_frame_pspoll {
     u_int8_t	i_fc[2];
@@ -352,7 +352,7 @@ struct ieee80211_frame_pspoll {
     u_int8_t	i_bssid[IEEE80211_ADDR_LEN];
     u_int8_t	i_ta[IEEE80211_ADDR_LEN];
     /* FCS */
-} __packed;
+} ;
 
 struct ieee80211_frame_cfend {		/* NB: also CF-End+CF-Ack */
     u_int8_t	i_fc[2];
@@ -360,7 +360,7 @@ struct ieee80211_frame_cfend {		/* NB: also CF-End+CF-Ack */
     u_int8_t	i_ra[IEEE80211_ADDR_LEN];
     u_int8_t	i_bssid[IEEE80211_ADDR_LEN];
     /* FCS */
-} __packed;
+} ;
 
 static __inline int
 ieee80211_has_seq(const struct ieee80211_frame *wh)
@@ -457,7 +457,7 @@ struct ieee80211_ie_wpa {
     u_int16_t	wpa_caps;	/* 802.11i capabilities */
     u_int16_t	wpa_pmkidcnt;	/* 802.11i pmkid count */
     u_int16_t	wpa_pmkids[8];	/* 802.11i pmkids */
-} __packed;
+} ;
 
 /*
  * Management information element payloads.
@@ -505,20 +505,20 @@ struct ieee80211_tim_ie {
     u_int8_t	tim_period;		/* DTIM period */
     u_int8_t	tim_bitctl;		/* bitmap control */
     u_int8_t	tim_bitmap[1];		/* variable-length bitmap */
-} __packed;
+} ;
 
 struct ieee80211_band {
     u_int8_t schan;			/* starting channel */
     u_int8_t nchan;			/* number channels */
     u_int8_t maxtxpwr;		/* tx power cap */
-} __packed;
+} ;
 
 struct ieee80211_country_ie {
     u_int8_t	ie;			/* IEEE80211_ELEMID_COUNTRY */
     u_int8_t	len;
     u_int8_t	cc[3];			/* ISO CC+(I)ndoor/(O)utdoor */
     struct ieee80211_band band[4];		/* up to 4 sub bands */
-} __packed;
+} ;
 
 #define IEEE80211_CHALLENGE_LEN		128
 
@@ -727,10 +727,10 @@ enum {
  */
 
 struct ieee80211_duration {
-    uint16_t	d_rts_dur;
-    uint16_t	d_data_dur;
-    uint16_t	d_plcp_len;
-    uint8_t		d_residue;	/* unused octets in time slot */
+    u_int16_t	d_rts_dur;
+    u_int16_t	d_data_dur;
+    u_int16_t	d_plcp_len;
+    u_int8_t		d_residue;	/* unused octets in time slot */
 };
 
 /* One Time Unit (TU) is 1Kus = 1024 microseconds. */
@@ -758,5 +758,5 @@ struct ieee80211_duration {
                  IEEE80211_DUR_DS_SLOW_PLCPHDR + \
                  IEEE80211_DUR_DS_DIFS)
 
-
+#pragma pack(pop)
 #endif /* !_NET80211_IEEE80211_H_ */

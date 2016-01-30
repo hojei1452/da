@@ -3,7 +3,11 @@
 
 #include <QObject>
 #include <QTime>
+#include <QDebug>
+#include <QByteArray>
 #include <pcap.h>
+#include <netinet/ip.h>
+#include <netinet/tcp.h>
 
 typedef enum _ENCRYPTION
 {
@@ -15,6 +19,33 @@ typedef enum _ENCRYPTION
 } ENCRYPTION;
 
 #pragma pack(push, 1)
+struct ieee80211_mgt_infomation
+{
+    u_int8_t mgt_ie;
+    u_int8_t mgt_len;
+    u_int8_t mgt_data[0];
+};
+
+struct ieee80211_mgt_vendor_infomation
+{
+    u_int8_t vendor_ie;
+    u_int8_t vendor_len;
+    u_int32_t vendor_oui:24;
+    u_int8_t vendor_oui_type;
+    u_int8_t vendor_data[0];
+};
+
+struct ieee80211_logical_link_control
+{
+#define IEEE80211_LINK_CODE_ETH 0x000000
+#define IEEE80211_LINK_TYPE_IP 0x0008
+    u_int8_t link_dsap;
+    u_int8_t link_ssap;
+    u_int8_t link_control_field;
+    u_int32_t link_orgenization_code:24;
+    u_int16_t link_type;
+};
+
 typedef struct _AP_INFOMATION
 {
     QString _bssid;
@@ -26,7 +57,8 @@ typedef struct _STATION_INFOMATION
 {
     QString _stationid;
     QString _data;
-    QString _url;
+    QString _uri;
+    QString _host;
     QString _cookie;
     QTime _currentTime;
 } STATION_INFOMATION, *LPSTATION_INFOMATION;
@@ -51,6 +83,10 @@ private:
     pcap_t* handle;
 
 protected:
+    QString u6byteToQString(u_int8_t* srcId);
+    bool isHttpRequest(QString& http, QString& uri);
+    bool findHost(QString& http, QString& host);
+    bool findCookie(QString& http, QString& cookies);
 
 signals:
     void captured(PACKET_INFOMATION);
